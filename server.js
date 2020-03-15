@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, 'build')))
 
-const Users = new Airtable({ apiKey: '', base: 'appoxdoTBUBc3VoJu', table: 'Users' })
+const Users = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Users' })
 
 app.post('/api/login', async (req, res) => {
   let response
@@ -26,9 +26,6 @@ app.post('/api/login', async (req, res) => {
   let updatedRecord
   if (response && response.records && response.records.length) {
     const record = response.records[0]
-
-    console.log(record, req.body.password)
-
     if (record.fields.password === md5(req.body.password)) {
       // todo: replace with a temporary sessionId /jwt
       sessionId = md5(record.fields.Id + 'secretkey' + new Date())

@@ -32,7 +32,6 @@ export default function AuthExample () {
 }
 
 function PrivateRoute ({ children, ...rest }) {
-  console.log(Cookies.get('sessionId'))
   return (
     <Route
       {...rest}
