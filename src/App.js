@@ -10,20 +10,28 @@ import Cookies from 'js-cookie'
 import { login } from './api'
 import './App.css'
 
+const authState = {
+  authorised: true
+}
+
+const isAuthorised = () => authState.authorised || !Cookies.get('sessionId') || !Cookies.get('sessionId').length
+
 const Header = () => {
-  return Cookies.get('sessionId')
-    ? <button onClick={() => { Cookies.set('sessionId', ''); window.location.reload() }}>Logout</button>
+  return isAuthorised()
+    ? <button onClick={() => { Cookies.set('sessionId', ''); authState.authorised = false; window.location.reload()}}>Logout</button>
     : ''
 }
-export default function AuthExample () {
+
+export default function App () {
   return (
     <Router>
-      <Header />
       <Switch>
         <Route path='/login'>
+          <Header />
           <LoginPage />
         </Route>
         <PrivateRoute path='/'>
+          <Header />
           <FormPage />
         </PrivateRoute>
       </Switch>
@@ -32,21 +40,19 @@ export default function AuthExample () {
 }
 
 function PrivateRoute ({ children, ...rest }) {
+  const history = useHistory()
+
   return (
     <Route
       {...rest}
       render={() => {
-        if (!Cookies.get('sessionId') || !Cookies.get('sessionId').length) {
-          window.location.href = '/login'
+        if (!isAuthorised()) {
+          history.replace('/login')
         }
         return children
       }}
     />
   )
-}
-
-function FormPage () {
-  return <h3>FormPage</h3>
 }
 
 function LoginPage () {
@@ -64,4 +70,8 @@ function LoginPage () {
       <button onClick={loginHandle}>Log in</button>
     </div>
   )
+}
+
+function FormPage () {
+  return <h3>FormPage</h3>
 }
