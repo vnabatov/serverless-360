@@ -10,15 +10,11 @@ import Cookies from 'js-cookie'
 import { login } from './api'
 import './App.css'
 
-const authState = {
-  authorised: true
-}
-
-const isAuthorised = () => authState.authorised || !Cookies.get('sessionId') || !Cookies.get('sessionId').length
+const isAuthorised = () => !Cookies.get('sessionId') || !Cookies.get('sessionId').length
 
 const Header = () => {
   return isAuthorised()
-    ? <button onClick={() => { Cookies.set('sessionId', ''); authState.authorised = false; window.location.reload()}}>Logout</button>
+    ? <button onClick={() => { Cookies.set('sessionId', ''); window.location.reload() }}>Logout</button>
     : ''
 }
 
