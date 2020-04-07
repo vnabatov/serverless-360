@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   useHistory,
+  useState, 
   useLocation
 } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -52,17 +53,22 @@ function PrivateRoute ({ children, ...rest }) {
 }
 
 function LoginPage () {
+  const [login, setLogin] = useState()
+  const [password, setPassword] = useState()
+  
   const history = useHistory()
   const location = useLocation()
 
   const { from } = location.state || { from: { pathname: '/' } }
   const loginHandle = async () => {
-    await login('vnabatov@wiley.com', '123456')
+    await login(login, password)
     history.replace(from)
   }
 
   return (
     <div>
+      <input type="text" defaultValue="vnabatov@wiley.com" onChange={e => setLogin(e.target.value)} />
+      <input type="password" defaultValue="123456" onChange={e => setPassword(e.target.value)} />
       <button onClick={loginHandle}>Log in</button>
     </div>
   )
