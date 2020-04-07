@@ -53,8 +53,8 @@ function PrivateRoute ({ children, ...rest }) {
 }
 
 function LoginPage () {
-  const [login, setLogin] = useState()
-  const [password, setPassword] = useState()
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
   
   const history = useHistory()
   const location = useLocation()
@@ -69,7 +69,7 @@ function LoginPage () {
     <div>
       <input type="text" defaultValue="vnabatov@wiley.com" onChange={e => setLogin(e.target.value)} />
       <input type="password" defaultValue="123456" onChange={e => setPassword(e.target.value)} />
-      <button onClick={loginHandle}>Log in</button>
+      <button onClick={loginHandle}>Login</button>
     </div>
   )
 }
