@@ -10,7 +10,15 @@ app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, 'build')))
 
+const checkSession = async (sessionId) => {
+  response = await Users.list({
+    filterByFormula: `{sessionId} = "${sessionId}"`
+  })
+  return sessionId && response && response.records && response.records.length
+}
 const Users = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Users' })
+const Questions = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Questions' })
+const Responces = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Responces' })
 
 app.post('/api/login', async (req, res) => {
   let response
@@ -27,7 +35,6 @@ app.post('/api/login', async (req, res) => {
   if (response && response.records && response.records.length) {
     const record = response.records[0]
     if (record.fields.password === md5(req.body.password)) {
-      // todo: replace with a temporary sessionId /jwt
       sessionId = md5(record.fields.Id + 'secretkey' + new Date())
       updatedRecord = await Users.update(record.id, { sessionId })
     }
@@ -35,11 +42,34 @@ app.post('/api/login', async (req, res) => {
   res.cookie('sessionId', sessionId)
   res.send({ status: sessionId && updatedRecord.id ? 'success' : 'fail' })
 })
+app.get('/api/users', async (req, res) => {
+  try {
+    response = await Users.list()
+  } catch (e) {
+    console.log(e)
+  }
+  res.send(JSON.stringify(response.records))
+})
+app.get('/api/questions', async (req, res) => {
+  try {
+    response = await Questions.list()
+  } catch (e) {
+    console.log(e)
+  }
+  res.send(JSON.stringify(response.records))
+})
+app.get('/api/responces', async (req, res) => {
+  try {
+    response = await Responces.list()
+  } catch (e) {
+    console.log(e)
+  }
+  res.send(JSON.stringify(response.records))
+})
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
-
 app.get('/login', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })

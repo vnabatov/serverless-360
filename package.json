@@ -13,13 +13,15 @@
     "md5": "^2.2.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-range": "^1.6.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "standard": "^14.3.3"
+    "standard": "^14.3.3",
+    "styled-components": "^5.1.0"
   },
   "scripts": {
-    "mock": "react-scripts start",
-    "start": "node server.js",
+    "dev": "react-scripts start",
+    "start": "npm run build && node server.js",
     "build": "react-scripts build",
     "lint": "standard --fix",
     "test": "react-scripts test",
