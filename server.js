@@ -10,12 +10,6 @@ app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, 'build')))
 
-const checkSession = async (sessionId) => {
-  response = await Users.list({
-    filterByFormula: `{sessionId} = "${sessionId}"`
-  })
-  return sessionId && response && response.records && response.records.length
-}
 const Users = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Users' })
 const Questions = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Questions' })
 const Responces = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Responces' })
@@ -43,6 +37,7 @@ app.post('/api/login', async (req, res) => {
   res.send({ status: sessionId && updatedRecord.id ? 'success' : 'fail' })
 })
 app.get('/api/users', async (req, res) => {
+  let response
   try {
     response = await Users.list()
   } catch (e) {
@@ -51,6 +46,7 @@ app.get('/api/users', async (req, res) => {
   res.send(JSON.stringify(response.records))
 })
 app.get('/api/questions', async (req, res) => {
+  let response
   try {
     response = await Questions.list()
   } catch (e) {
@@ -59,6 +55,7 @@ app.get('/api/questions', async (req, res) => {
   res.send(JSON.stringify(response.records))
 })
 app.get('/api/responces', async (req, res) => {
+  let response
   try {
     response = await Responces.list()
   } catch (e) {

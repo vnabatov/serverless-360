@@ -26,7 +26,7 @@ gap: 10px 10px;
 grid-template-columns: repeat(3, 1fr);
 
 @media(min-width: 900px) {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
 }
 `
 
@@ -36,13 +36,17 @@ grid-template-columns: 1fr;
 grid-template-rows: 1fr 1fr;
 gap: 10px 10px;
 `
-export default ({questions, user}) => { 
-return <User><h1>{user.Name}</h1>
-<QuestionsSet>
-    {questions.length ? questions.map(({Text, Description}, key) => <Question>
-    <div>{key+1}.{Text} - {Description}</div>
-    <SimpleRange />
-    </Question>) : 'loading...'}
-</QuestionsSet>
-</User>
+export default ({ questions, user }) => {
+  return (
+    <User><h1>{user.Name}</h1>
+      <QuestionsSet>
+        {questions.length ? questions.map(({ Text, Description }, key) => (
+          <Question key={key}>
+            <div>{key + 1}.{Text} - {Description}</div>
+            <SimpleRange />
+          </Question>
+        )) : 'loading...'}
+      </QuestionsSet>
+    </User>
+  )
 }

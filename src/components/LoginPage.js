@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-
 const FormWrapper = styled.div`  
   width: 300px;          
   height: 200px;          
@@ -58,8 +57,8 @@ export default () => {
 
   return (
     <FormWrapper>
-      <HeaderInput placeholder="email" type="text" onChange={(e)=>setEmail(e.target.value)} />
-      <HeaderInput placeholder="password" type="password" onChange={(e)=>setPassword(e.target.value)} />
+      <HeaderInput placeholder='email' type='text' onChange={(e) => setEmail(e.target.value)} />
+      <HeaderInput placeholder='password' type='password' onChange={(e) => setPassword(e.target.value)} />
       <HeaderButton onClick={loginHandle}>Login</HeaderButton>
     </FormWrapper>
   )

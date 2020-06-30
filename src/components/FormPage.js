@@ -12,11 +12,13 @@ export default () => {
       setQuestions(await getQuestions())
     }
     getData()
-  }, [setUsers,setQuestions]);
+  }, [setUsers, setQuestions])
 
-  return <div>
-    {users.length ? users.map(user => 
-      <Questions questions={questions} user={user} />
-    ) : 'loading users...'}
-  </div>
+  return (
+    <div>
+      {users.length ? users.map(user =>
+        <Questions key={user.id} questions={questions} user={user} />
+      ) : 'loading users...'}
+    </div>
+  )
 }

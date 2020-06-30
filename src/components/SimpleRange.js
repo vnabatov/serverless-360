@@ -1,5 +1,5 @@
 import React from 'react'
-import { Range } from 'react-range';
+import { Range } from 'react-range'
 import styled from 'styled-components'
 
 const value2smile = (value) => ['?', ':\'(', ':(', ':|', ':)', ':D'][value]
@@ -20,44 +20,48 @@ transition: box-shadow .2s;
 }
 `
 
- class SimpleRange extends React.Component {
-    state = { values: [5] };
-    render() {
-      return (
-        <Range
-          step={1}
-          min={0}
-          max={5}
-          values={this.state.values}
-          onChange={values => this.setState({ values })}
-          renderTrack={({ props, children }) => (
-            <div
-              {...props}
-              style={{
-                ...props.style,
-                height: '3px',
-                width: '50%',
-                marginLeft: 15,
-                backgroundColor: '#ccc'
-              }}
-            >
-              {children}
-            </div>
-          )}
-          renderThumb={({ props }) => (
-            <Thumb
-              {...props}
-              style={{
-                ...props.style,
-                backgroundColor: value2color(this.state.values[0]),
-              }}
-            >
-              {value2smile(this.state.values[0])}
-            </Thumb>
-          )}
-        />
-      );
-    }
+class SimpleRange extends React.Component {
+  constructor () {
+    super()
+    this.state = { values: [0] }
   }
+
+  render () {
+    return (
+      <Range
+        step={1}
+        min={0}
+        max={5}
+        values={this.state.values}
+        onChange={values => this.setState({ values })}
+        renderTrack={({ props, children }) => (
+          <div
+            {...props}
+            style={{
+              ...props.style,
+              height: '3px',
+              width: '50%',
+              marginLeft: 15,
+              backgroundColor: '#ccc'
+            }}
+          >
+            {children}
+          </div>
+        )}
+        renderThumb={({ props }) => (
+          <Thumb
+            {...props}
+            style={{
+              ...props.style,
+              backgroundColor: value2color(this.state.values[0])
+            }}
+          >
+            {value2smile(this.state.values[0])}
+          </Thumb>
+        )}
+      />
+    )
+  }
+}
 
 export default SimpleRange
