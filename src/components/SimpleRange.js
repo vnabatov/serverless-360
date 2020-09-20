@@ -33,7 +33,10 @@ class SimpleRange extends React.Component {
         min={0}
         max={5}
         values={this.state.values}
-        onChange={values => this.setState({ values })}
+        onChange={values => {
+          this.props.onChange && this.props.onChange(values[0])
+          this.setState({ values })}
+        }
         renderTrack={({ props, children }) => (
           <div
             {...props}

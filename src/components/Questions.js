@@ -43,7 +43,7 @@ export default ({ questions, user }) => {
         {questions.length ? questions.map(({ Text, Description }, key) => (
           <Question key={key}>
             <div>{key + 1}.{Text} - {Description}</div>
-            <SimpleRange />
+            <SimpleRange onChange={(val) => console.log(val)}/>
           </Question>
         )) : 'loading...'}
       </QuestionsSet>

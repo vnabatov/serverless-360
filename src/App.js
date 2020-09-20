@@ -9,20 +9,23 @@ import LoginPage from './components/LoginPage'
 import FormPage from './components/FormPage'
 import PrivateRoute from './components/PrivateRoute'
 import Header from './components/Header'
+import Context360 from './components/Context360'
 
 export default function App () {
   return (
-    <Router>
-      <Switch>
-        <Route path='/login'>
-          <Header />
-          <LoginPage />
-        </Route>
-        <PrivateRoute path='/'>
-          <Header />
-          <FormPage />
-        </PrivateRoute>
-      </Switch>
-    </Router>
+    <Context360.Provider>
+      <Router>
+        <Switch>
+          <Route path='/login'>
+            <Header />
+            <LoginPage />
+          </Route>
+          <PrivateRoute path='/'>
+            <Header />
+            <FormPage />
+          </PrivateRoute>
+        </Switch>
+      </Router>
+    </Context360.Provider>
   )
 }

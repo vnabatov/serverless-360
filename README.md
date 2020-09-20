@@ -5,7 +5,7 @@ open localhost:8080
 Development:
 
 1st console
-npm i && cross-env API_KEY=key npm start 
+npm i && cross-env API_KEY=key node server.js
 
 2nd console
 npm run dev

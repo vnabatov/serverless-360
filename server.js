@@ -10,9 +10,12 @@ app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, 'build')))
 
-const Users = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Users' })
-const Questions = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Questions' })
-const Responces = new Airtable({ apiKey: process.env.API_KEY, base: 'appoxdoTBUBc3VoJu', table: 'Responces' })
+const base = 'appoxdoTBUBc3VoJu'
+const apiKey = process.env.API_KEY
+
+const Users = new Airtable({ apiKey, base, table: 'Users' })
+const Questions = new Airtable({ apiKey, base, table: 'Questions' })
+const Responces = new Airtable({ apiKey, base, table: 'Responces' })
 
 app.post('/api/login', async (req, res) => {
   let response
