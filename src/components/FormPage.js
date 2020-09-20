@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Questions from './Questions'
 import { getUsers, getQuestions } from '../api'
-import Context360 from './Context360'
 
-export default () => {
+export default ({ answers, setAnswers }) => {
   const [users, setUsers] = useState([])
   const [questions, setQuestions] = useState([])
 
@@ -15,16 +14,17 @@ export default () => {
     getData()
   }, [setUsers, setQuestions])
 
-  return <>
-      <Context360.Consumer>
-        {value => {
-          console.log(value)
-          return '123'+value
-        }}
-      </Context360.Consumer>
+  const addAnswer = (userId, questionId, value) => {
+    if(!answers[userId]) {
+      answers[userId] = {}
+    }
+    answers[userId][questionId] = value
+    setAnswers(answers)
+  }
 
+  return <>
       {users.length ? users.map(user =>
-        <Questions key={user.id} questions={questions} user={user} />
+        <Questions key={user.Id} addAnswer={addAnswer} questions={questions} user={user} />
       ) : 'loading users...'}
  </>
 } 

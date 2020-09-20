@@ -36,14 +36,14 @@ grid-template-columns: 1fr;
 grid-template-rows: 1fr 1fr;
 gap: 10px 10px;
 `
-export default ({ questions, user }) => {
+export default ({ questions, user, addAnswer }) => {
   return (
     <User><h1>{user.Name}</h1>
       <QuestionsSet>
         {questions.length ? questions.map(({ Text, Description }, key) => (
           <Question key={key}>
             <div>{key + 1}.{Text} - {Description}</div>
-            <SimpleRange onChange={(val) => console.log(val)}/>
+            <SimpleRange onChange={(val) => addAnswer(user.Id, key, val)}/>
           </Question>
         )) : 'loading...'}
       </QuestionsSet>
